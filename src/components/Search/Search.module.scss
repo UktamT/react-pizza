@@ -1,0 +1,19 @@
+.root{
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 12px 20px;
+  width: 300px;
+  border-radius: 10px;
+}
+.clear{
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  position: absolute;
+  right: 5px;
+}
+.flex{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
