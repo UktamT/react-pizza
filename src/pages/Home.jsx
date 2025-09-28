@@ -8,17 +8,19 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
+import {useSelector, useDispatch} from 'react-redux'
+import { setCategoryId, setSort } from '../redux/slises/filterSlice';
+
 
 const Home = () => {
+  const dispatch = useDispatch()
+  const categoryId = useSelector((state) => state.filter.categoryId)
+  const sort = useSelector((state) => state.filter.sort)
+
   const {searchValue} = React.useContext(SearchContext)
 
     const [items, setItems] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(true);
-    const [sort, setSort] = React.useState({
-      name: 'популярности',
-      sortProperty: 'rating',
-    })
-    const [categoryId, setCategoryId] = React.useState(0)
     const [currentPage, setCurrentPage] = React.useState(1)
 
 useEffect(() => {
@@ -46,17 +48,19 @@ useEffect(() => {
   window.scrollTo(0, 0);
 }, [categoryId, sort, searchValue,currentPage]);
 
+  const onChangeCategory = (id) => {
+    dispatch(setCategoryId(id))
+  }
 
-
-
-  
-  
+  const onChangeSort = (obj) => {
+    dispatch(setSort(obj))
+  }
 
   return (
     <div className='container'>
     <div className="content__top">
-              <Categories value={categoryId} onClickCategory={(i) => setCategoryId(i)}/>
-              <Sort value={sort} onClickSort={(i) => setSort(i)} />
+              <Categories value={categoryId} onClickCategory={onChangeCategory}/>
+              <Sort value={sort} onClickSort={onChangeSort} />
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
